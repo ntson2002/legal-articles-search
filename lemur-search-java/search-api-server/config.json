@@ -4,5 +4,6 @@
     ],
     "temp": "/Volumes/i1501/s1520203/lemur/legal_lrec_index",
     "rmi-port": "52366",
-    "rmi-id": "LEGAL-API"
+    "rmi-id": "LEGAL-API",
+    "lemurlib": "lemur-installed/lib"
 }

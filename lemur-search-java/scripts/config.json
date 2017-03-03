@@ -1,0 +1,8 @@
+{
+    "indexs": [    	
+    	"civil-code-index"
+    ],
+    "rmi-port": "52366",
+    "rmi-id": "LEGAL-API",
+    "lemurlib": "../search-api-server/lemur-installed/lib"
+}

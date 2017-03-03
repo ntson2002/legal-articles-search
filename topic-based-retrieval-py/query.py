@@ -50,6 +50,8 @@ def queryMDS(model, query, top_k):
     with open(model, 'rb') as input:
         [files, vectorizer, matrix, D, T, M, invD, datas] = pickle.load(input)
     test_query = [query]
+    print matrix.shape
+    print T.shape
     query_vec = transform_query_to_vector(vectorizer, test_query)
     d = distance.cdist(query_vec, matrix, 'cosine')
     m = T.dot(d.T)

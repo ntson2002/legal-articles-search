@@ -5,6 +5,7 @@ import query as api
 
 urls = ('/users', 'list_users',
         '/api/search/(.*)', 'api_query',
+        '/api/search_mds/(.*)', 'api_query_mds',
         '/api/f=topics', 'api_topics',
         '/api/search2/(.*)/topic/(.+)', 'api_query_topic')
 
@@ -28,6 +29,15 @@ class api_query:
         web.header('Content-Type', 'application/json')
         model = "output/model_TFIDF.pkl"
         data = api.queryTFIDF(model, q, 20)
+        return json.dumps(data, indent=4, sort_keys=True)
+
+class api_query_mds:
+    def GET(self, q):
+        print "function: api_query_mds"
+        print "q:", q
+        web.header('Content-Type', 'application/json')
+        model = "output/model_TFIDF_MDS.pkl"
+        data = api.queryMDS(model, q, 20)
         return json.dumps(data, indent=4, sort_keys=True)
 
 class api_query_topic:

@@ -14,6 +14,7 @@
 <%@page import="java.rmi.registry.Registry"%>
 <%@page import="java.rmi.registry.LocateRegistry"%>
 <%@page import="com.interf.test.Constant"%>
+<%@page import="util.Rest"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <h1>Civil code search engine</h1>
 <script type="text/javascript">    
@@ -50,12 +51,10 @@ public JSONArray queryOnOriginalSpace(String q) throws RemoteException, Exceptio
         return o.getJSONArray("result");
         //out.print(o.toString());
 }
-public JSONArray queryOnMDSSpace(JspWriter out, String q) throws IOException, JSONException 
+public JSONArray queryOnMDSSpace_old(JspWriter out, String q) throws IOException, JSONException 
 {   
     String pythonPath = "//anaconda/bin/python";    
     String pythonProgram ="/Users/sonnguyen/Bitbucket/nii-projects/MDS/query.py";
-//    String pythonPath = "//anaconda/bin/python2.7";
-//    String pythonProgram ="/Users/nguyenlab/Programs/MDS/query.py";
     
     String command = pythonPath + " " + pythonProgram + " " + q.replace(" ", "_") + "";
     Process p = Runtime.getRuntime().exec(command);
@@ -74,6 +73,13 @@ public JSONArray queryOnMDSSpace(JspWriter out, String q) throws IOException, JS
     return o2.getJSONArray("result");
 }
 
+public JSONArray queryOnMDSSpace(JspWriter out, String q) throws IOException, JSONException 
+{   
+    String address = "http://127.0.0.1:8081";
+    String url = address + "/api/search_mds/" + q.replace(" ", "_");
+    JSONObject o = Rest.getJSONObjectFromURL(url);    
+    return o.getJSONArray("result");
+}
 %>
 <hr/>
 <%    

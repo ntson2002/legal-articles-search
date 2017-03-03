@@ -20,10 +20,15 @@ import org.json.JSONObject;
 
 public class TestQuery {
 	static QueryEnvironment env = null;
+	
 	static {
+		
 		try {
 			// System.setProperty("java.library.path","/Users/ntson/Downloads/lemur-installed/lib");
-			System.setProperty("java.library.path", "lemur-installed/lib");
+//			System.setProperty("java.library.path", "lemur-installed/lib");
+			Config config1 = new Config("config.json");
+			
+			System.setProperty("java.library.path", config1.getAtribute("lemurlib"));
 
 			// System.setProperty("java.library.path","/Users/nguyenson/Programs/lemur-installed/lib");
 			// System.setProperty("java.library.path","Z:\\lemur\\services\\lemur-installed\\lib");
@@ -102,7 +107,7 @@ public class TestQuery {
 		JSONArray docs = new JSONArray();
 
 		for (int i = 0; i < names.length; i++) {
-			System.out.println("DOC " + i);
+//			System.out.println("DOC " + i);
 			JSONObject doc = new JSONObject();
 			ParsedDocument adoc = documents[i];
 			try {
@@ -132,7 +137,7 @@ public class TestQuery {
 			doc.put("terms", termText);
 			doc.put("path", names[i]);
 			doc.put("score", scored[i].score);
-			System.out.println(names[i] + "\t" + scored[i].score);
+			System.out.println("\tdoc " + i + ": " + scored[i].score);
 
 			// docs.put(names[i]);
 			docs.put(doc);
@@ -151,7 +156,7 @@ public class TestQuery {
 		List<String> list = Files.readAllLines(Paths.get(fileName), Charset.defaultCharset());
 		String[] stopWords = list.toArray(new String[list.size()]);
 		env.setStopwords(stopWords);
-		
+		System.out.println("QUERY: " + queryString);
 		QueryAnnotation results = env.runAnnotatedQuery(queryString, nResult);
 		ScoredExtentResult[] scored = results.getResults();
 
@@ -171,7 +176,7 @@ public class TestQuery {
 		JSONArray docs = new JSONArray();
 
 		for (int i = 0; i < names.length; i++) {
-			System.out.println("DOC " + i);
+			
 			JSONObject doc = new JSONObject();
 			ParsedDocument adoc = documents[i];
 			doc.put("text", adoc.text);			
@@ -182,7 +187,8 @@ public class TestQuery {
 	
 			doc.put("path", names[i]);
 			doc.put("score", scored[i].score);
-			System.out.println(names[i] + "\t" + scored[i].score);
+			System.out.println("\tdoc " + i + ": " + scored[i].score);
+//			System.out.println(names[i] + "\t" + scored[i].score);
 
 			// docs.put(names[i]);
 			docs.put(doc);
