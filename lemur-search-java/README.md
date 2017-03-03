@@ -7,7 +7,7 @@
     
 folder: **scripts**
 
-requirements: config.json, lemur lib folde
+requirements: config.json, lemur lib folder, index folder
 
 ```sh
 #!/bin/bash
