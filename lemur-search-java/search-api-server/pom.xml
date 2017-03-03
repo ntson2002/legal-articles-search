@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>jaist</groupId>
+  <artifactId>search-api</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+   <dependencies>
+  		<dependency>
+			<groupId>lemur</groupId>
+			<artifactId>indri</artifactId>
+			<version>4.12.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/indri.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>jaist</groupId>
+			<artifactId>search-api-interface</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/search-api-interface.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+		<dependency>
+			<groupId>lemur</groupId>
+			<artifactId>ireval</artifactId>
+			<version>4.12.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/ireval.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+			<groupId>lemur</groupId>
+			<artifactId>lemur</artifactId>
+			<version>4.12.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/lemur.jar</systemPath>
+		</dependency>
+  </dependencies>
+  <build>
+		<finalName>search-api</finalName>
+		<plugins>
+
+			<!-- download source code in Eclipse, best practice -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>false</downloadJavadocs>
+				</configuration>
+			</plugin>
+
+			<!-- Set a compiler level -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<!-- Make this jar executable -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.test.RMIServer</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<!-- Includes the runtime dependencies -->
+			<plugin>
+				<groupId>org.dstovall</groupId>
+				<artifactId>onejar-maven-plugin</artifactId>
+				<version>1.4.4</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>one-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- One-Jar is in the googlecode repository -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>onejar-maven-plugin.googlecode.com</id>
+			<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+		</pluginRepository>
+	</pluginRepositories>
+</project>

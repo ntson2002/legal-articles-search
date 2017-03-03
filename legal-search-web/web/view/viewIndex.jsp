@@ -105,8 +105,8 @@ public JSONArray queryOnMDSSpace(JspWriter out, String q) throws IOException, JS
      <input class='search-button' type="submit" value="Search"/> 
      <p>
      Query space:
-     <div style="display: block; width: 200px; margin-left: 40px"><input name='space'  type="radio" value="org" <% if(space.equals("org")) out.print("checked='checked'"); %>/> Original space  </div>
-     <div style="display: block; width: 200px; margin-left: 40px"><input name='space' type="radio" value="mds" <% if(space.equals("mds")) out.print("checked='checked'"); %>/> MDS space</div>
+     <div style="display: block; width: 200px; margin-left: 40px"><input name='space'  type="radio" value="org" <% if(space.equals("org")) out.print("checked='checked'"); %>/> Original space (lemur API) </div>
+     <div style="display: block; width: 200px; margin-left: 40px"><input name='space' type="radio" value="mds" <% if(space.equals("mds")) out.print("checked='checked'"); %>/> MDS space (python API)</div>
 <!--     <div style="display: block; width: 200px; margin-left: 40px"><input name='space'  type="radio" value="merge" <% if(space.equals("merge")) out.print("checked='checked'"); %>/> Merge</div>-->
      </p>
     <hr/>
