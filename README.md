@@ -6,7 +6,7 @@
 
     folder: lemur-search-java/scripts
     
-### Step 3) Deploy web project and run 
+### Step 3) Web interface (JSP) 
     folder: legal-search-web
 
 
