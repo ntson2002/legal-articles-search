@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="400" style="border:1px solid"> </canvas>
+        <script>
+            var colours = ['red', 'green', 'blue', 'yellow', 'magenta'];
+            var n = colours.length;
+            var r = 10;
+            var d = r * 2;
+
+            // create an offsreen canvas containing the desired coloured circles
+            var off = document.createElement('canvas');
+            off.width = n * d;
+            off.height = d;
+            var ctx = off.getContext('2d');  
+
+            for (var i = 0; i < n; ++i) {
+                ctx.fillStyle = colours[i];
+                ctx.beginPath();
+                ctx.arc(i * d + r, r, r, 0, 2 * Math.PI);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            // get handles to the on-screen canvas
+            var canvas = document.getElementById('canvas');
+            var ctx2 = canvas.getContext('2d');
+
+            // create 3000 random points
+            var points = [];
+            for (var i = 0; i < 20; ++i) {
+                points.push({
+                    c: Math.floor(n * Math.random()),
+                    x: Math.floor(canvas.width * Math.random()),
+                    y: Math.floor(canvas.height * Math.random())
+                });
+            }
+
+            // copy points from the offscreen canvas into the on-page canvas
+            var t0 = Date.now();
+            for (var i = 0; i < points.length; ++i) {
+                var p = points[i];
+                ctx2.drawImage(off, p.c * d, 0, d, d, p.x - r, p.y - r, d, d);
+            }
+            var t1 = Date.now();
+            alert((t1 - t0) + "ms");
+        </script>
+        <div>TODO write content</div>
+    </body>
+</html>
