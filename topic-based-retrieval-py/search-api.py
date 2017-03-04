@@ -3,18 +3,11 @@ import json
 
 import query as api
 
-urls = ('/users', 'list_users',
-        '/api/search/(.*)', 'api_query',
+urls = ('/api/search/(.*)', 'api_query',
         '/api/search_mds/(.*)', 'api_query_mds',
-        '/api/f=topics', 'api_topics',
+        '/api/topics', 'api_topics',
         '/api/search2/(.*)/topic/(.+)', 'api_query_topic')
 
-
-class list_users:
-	def GET(self):
-		web.header('Content-Type', 'application/json')
-		dic = {'a':5, 'b':5, 'd':l[2]}
-		return json.dumps(dic, indent=4, sort_keys=True)
 
 class api_topics:
     def GET(self):

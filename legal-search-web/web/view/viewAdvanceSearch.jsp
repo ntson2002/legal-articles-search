@@ -217,7 +217,7 @@
         map = result.getJSONObject("map_data");
     }
 
-    String url = IP + "/api/f=topics";
+    String url = IP + "/api/topics";
     JSONObject topics = Rest.getJSONObjectFromURL(url);
 
 %>

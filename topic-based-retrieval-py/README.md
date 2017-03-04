@@ -49,8 +49,19 @@ Support 3 types of query:
 Notes: using "_" instead of spaces
 Query: A demand for payment shall not have the effect
 URL:
-    
-    http://0.0.0.0:8081/api/search/A_demand_for_payment_shall_not_have_the_effect
+1) Query using TF-IDF model
+
+        http://0.0.0.0:8081/api/search/A_demand_for_payment_shall_not_have_the_effect
+
+
+2) Query on MDS model 
+
+        http://0.0.0.0:8081/api/search_mds/A_demand_for_payment_shall_not_have_the_effect
+
+3) Get topics vectors
+
+        http://0.0.0.0:8081/api/topics
+        
 
 
 ### Notes 
