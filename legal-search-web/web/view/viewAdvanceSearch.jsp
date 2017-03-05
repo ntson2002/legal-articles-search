@@ -211,6 +211,7 @@
         else
             result = queryTFIDF(IP, q);
     }
+    
     if (result != null)
     {
         arr = result.getJSONArray("result");

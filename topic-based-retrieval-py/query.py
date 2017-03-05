@@ -1,10 +1,7 @@
 from scipy.spatial import distance
 from function import *
-import json
-import sys
 import pickle
 import numpy as np
-from pprint import pprint
 import random
 
 

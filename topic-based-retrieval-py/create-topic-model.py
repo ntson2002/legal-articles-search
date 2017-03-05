@@ -1,7 +1,4 @@
 from function import convert_jsoncorpus_to_count_matrix
-from scipy.spatial import distance
-import numpy as np
-import scipy.spatial.distance as dis
 import lda
 import pickle
 
