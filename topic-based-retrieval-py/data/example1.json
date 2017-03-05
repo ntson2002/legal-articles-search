@@ -1,0 +1,52 @@
+[
+    {
+        "article_id": "/Users/sonnguyen/Bitbucket/legal-articles-search/topic-based-retrieval-py/data/example1/doc1.txt", 
+        "description": "", 
+        "sentences": [
+            {
+                "text": "Brocolli is good to eat. My brother likes to eat good brocolli, but not my mother.", 
+                "length": 16
+            }
+        ]
+    }, 
+    {
+        "article_id": "/Users/sonnguyen/Bitbucket/legal-articles-search/topic-based-retrieval-py/data/example1/doc2.txt", 
+        "description": "", 
+        "sentences": [
+            {
+                "text": "My mother spends a lot of time driving my brother around to baseball practice.\n around baseball brother driving lot mother practice spends time", 
+                "length": 23
+            }
+        ]
+    }, 
+    {
+        "article_id": "/Users/sonnguyen/Bitbucket/legal-articles-search/topic-based-retrieval-py/data/example1/doc3.txt", 
+        "description": "", 
+        "sentences": [
+            {
+                "text": "Some health experts suggest that driving may cause increased tension and blood pressure.", 
+                "length": 13
+            }
+        ]
+    }, 
+    {
+        "article_id": "/Users/sonnguyen/Bitbucket/legal-articles-search/topic-based-retrieval-py/data/example1/doc4.txt", 
+        "description": "", 
+        "sentences": [
+            {
+                "text": "I often feel pressure to perform well at school, but my mother never seems to drive my brother to do better.", 
+                "length": 21
+            }
+        ]
+    }, 
+    {
+        "article_id": "/Users/sonnguyen/Bitbucket/legal-articles-search/topic-based-retrieval-py/data/example1/doc5.txt", 
+        "description": "", 
+        "sentences": [
+            {
+                "text": "Health professionals say that brocolli is good for your health.", 
+                "length": 10
+            }
+        ]
+    }
+]

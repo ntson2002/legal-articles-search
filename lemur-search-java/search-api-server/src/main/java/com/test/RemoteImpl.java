@@ -16,7 +16,7 @@ import lemurproject.indri.ScoredExtentResult;
 
 import com.interf.test.TestRemote;
 
-import examples.TestQuery;
+import examples.Main;
 
 
 
@@ -24,35 +24,17 @@ import examples.TestQuery;
 
 public class RemoteImpl extends UnicastRemoteObject implements TestRemote{
 	
-//	static {
-//		try
-//		{
-//		System.setProperty("java.library.path", "/Users/ntson/Downloads/lemur-installed/lib");
-//		Field fieldSysPath = ClassLoader.class.getDeclaredField( "sys_paths" );
-//		 fieldSysPath.setAccessible( true );
-//		 fieldSysPath.set( null, null );
-//		 
-//		Properties props = System.getProperties();
-//        System.out.println("java.library.path="+props.get("java.library.path"));
-//		}
-//		catch (Exception e)
-//		{
-//			
-//		}
-//    }
-	
 	protected RemoteImpl() throws RemoteException {
 		super();		
 		try {
-			Class.forName("examples.TestQuery");
+			System.out.println("Main class: examples.Main");
+			Class.forName("examples.Main");
 		} catch (ClassNotFoundException e) {
 			
 			throw new RemoteException(e.getMessage());
 		}
 		// TODO Auto-generated constructor stub
 	}
-
-	private static final long serialversionUID = 1L;
 
 	public boolean isLoginValid(String username) throws Exception {
 		System.out.println(username);
@@ -63,16 +45,15 @@ public class RemoteImpl extends UnicastRemoteObject implements TestRemote{
 		}
 		
 		return true;
-	}
-	
+	}	
 	
 	public String query(String queryString) throws Exception {
-		return TestQuery.query(queryString);
+		return Main.query(queryString);
 	}
 	
 	public String query2(String parameters) 
 			throws Exception {
-		return TestQuery.query2(parameters);
+		return Main.query2(parameters);
 	}
 
 }

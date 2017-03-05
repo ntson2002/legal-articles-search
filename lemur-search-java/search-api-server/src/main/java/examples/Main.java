@@ -18,20 +18,15 @@ import lemurproject.indri.ScoredExtentResult;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class TestQuery {
+public class Main {
 	static QueryEnvironment env = null;
 	
 	static {
 		
 		try {
-			// System.setProperty("java.library.path","/Users/ntson/Downloads/lemur-installed/lib");
 //			System.setProperty("java.library.path", "lemur-installed/lib");
-			Config config1 = new Config("config.json");
-			
+			Config config1 = new Config("config.json");			
 			System.setProperty("java.library.path", config1.getAtribute("lemurlib"));
-
-			// System.setProperty("java.library.path","/Users/nguyenson/Programs/lemur-installed/lib");
-			// System.setProperty("java.library.path","Z:\\lemur\\services\\lemur-installed\\lib");
 			Field fieldSysPath = ClassLoader.class
 					.getDeclaredField("sys_paths");
 			fieldSysPath.setAccessible(true);
@@ -50,8 +45,6 @@ public class TestQuery {
 			JSONArray indexs = config.getIndexPaths();
 			for (int i = 0; i < indexs.length(); i++) {
 				env.addIndex(indexs.getString(i));
-				// env.addIndex("/Volumes/i1501/s1520203/lemur/legal_lrec_index");
-				// env.addIndex("/Volumes/i1501/s1520203/lemur/civilcode-index");
 				// env.addIndex("Z:\\lemur\\civilcode-index");
 			}
 
@@ -66,13 +59,13 @@ public class TestQuery {
 		// System.out.println(config.getAtribute("indexs"));
 
 		//Test 1
-		System.out.println(TestQuery.query("this Section shall"));
+		System.out.println(Main.query("this Section shall"));
 		
 		//Test 2
 		JSONObject o = new JSONObject();
 		o.put("query", "this Section shall");
 		o.put("n", 20);
-		TestQuery.query2(o.toString());
+		Main.query2(o.toString());
 	}
 
 	public static String query(String queryString) throws Exception {

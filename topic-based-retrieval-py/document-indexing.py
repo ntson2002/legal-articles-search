@@ -42,11 +42,11 @@ if __name__ == '__main__':
         help="{json,folder} : a json file contain all articles or a folder contains all txt files"
     )
     optparser.add_option(
-        "-i", "--input", default="data/all_articles.json",
+        "-i", "--input", default="data/example1.json",
         help="path of json file or folder"
     )
     optparser.add_option(
-        "-o", "--output", default="output/model_TFIDF.pkl",
+        "-o", "--output", default="output/model_TFIDF_test.pkl",
         help="output"
     )
 

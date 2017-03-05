@@ -1,0 +1,52 @@
+[
+    {
+        "article_id": "/Users/nomura/Desktop/tools/example2/doc1.txt", 
+        "description": "", 
+        "sentences": [
+            {
+                "text": "\u660e\u65e5 \u96e8 \u304c \u964d\u308b \u3002", 
+                "length": 5
+            }
+        ]
+    }, 
+    {
+        "article_id": "/Users/nomura/Desktop/tools/example2/doc2.txt", 
+        "description": "", 
+        "sentences": [
+            {
+                "text": "\u660e\u65e5 \u671d \u5b66\u6821 \u3078 \u884c\u304f \u3002", 
+                "length": 6
+            }
+        ]
+    }, 
+    {
+        "article_id": "/Users/nomura/Desktop/tools/example2/doc3.txt", 
+        "description": "", 
+        "sentences": [
+            {
+                "text": "\u5b66\u6821\u3067 \u30c6\u30b9\u30c8 \u3092 \u53d7\u3051\u308b \u3002", 
+                "length": 5
+            }
+        ]
+    }, 
+    {
+        "article_id": "/Users/nomura/Desktop/tools/example2/doc4.txt", 
+        "description": "", 
+        "sentences": [
+            {
+                "text": "\u30c6\u30b9\u30c8 \u306e \u7bc4\u56f2 \u306f \u5206\u304b\u3089 \u306a\u3044 \u3002", 
+                "length": 7
+            }
+        ]
+    }, 
+    {
+        "article_id": "/Users/nomura/Desktop/tools/example2/doc5.txt", 
+        "description": "", 
+        "sentences": [
+            {
+                "text": "\u308a\u3093\u3054 \u306f \u660e\u65e5 \u8cb7\u3044 \u306b \u884c\u304f \u3002", 
+                "length": 7
+            }
+        ]
+    }
+]

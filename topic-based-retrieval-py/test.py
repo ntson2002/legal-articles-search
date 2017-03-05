@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import query as api
 from pprint import pprint
 
@@ -40,9 +43,18 @@ def testQuery_TopicBased():
     pprint(data)
 
 
+def testQuery_TFIDF_Japanese():
+    print "================================================="
+    print "Test query:"
+    q = "明日"
+    model = "output/model_TFIDF_j.pkl"
+    data = api.queryTFIDF(model, q, 2)
+    pprint(data)
+
 if __name__ == '__main__':
-    printTopicVectors()
-    testQuery_TFIDF()
-    testQuery_MDS()
-    testQuery_TopicBased()
+    # printTopicVectors()
+    # testQuery_TFIDF()
+    # testQuery_MDS()
+    # testQuery_TopicBased()
+    testQuery_TFIDF_Japanese()
 

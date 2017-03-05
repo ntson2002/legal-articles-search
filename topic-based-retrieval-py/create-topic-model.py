@@ -10,18 +10,16 @@ import pickle
 # files, vectorizer, X, datas = convert_to_tfidf_matrix(path_txt)
 
 def create_topic_vectors(path_json, save_path):    
-    files, vectorizer, X, datas = convert_jsoncorpus_to_count_matrix(path_json)
+    files, vectorizer, count_matrix, datas = convert_jsoncorpus_to_count_matrix(path_json)
     vocab = vectorizer.get_feature_names()
-    D = distance.cdist(X, X, 'cosine')
 
     print "Number of feature: ", len(vectorizer.get_feature_names())
-    print "Features:", vectorizer.get_feature_names()[2500:2510], "..."
-    print "Size of TF-IDF matrix: ", X.shape
-    print "Number of files: ", X.shape
-    print "Distance matrix shape: ", D.shape
+    print "Features:", len(vocab), vocab[2500:2510], "..."
+    print "Size of count matrix: ", count_matrix.shape
+    print "Number of files: ", len(files)
 
     model = lda.LDA(n_topics=10, n_iter=2000, random_state=1)
-    model.fit(X)  # model.fit_transform(X) is also available
+    model.fit(count_matrix)  # model.fit_transform(X) is also available
 
     topic_word = model.topic_word_
     topic_vectors = [topic_dist for i, topic_dist in enumerate(topic_word)]
