@@ -64,7 +64,10 @@ URL:
         http://0.0.0.0:8081/api/topics
         
 
-
+4) Topic based retrieval:
+        
+        http://0.0.0.0:8081/api/search2/A_demand_for_payment_shall_not_have_the_effect/topic/2 
+        
 ### Notes 
 
 1) Upload to server 
