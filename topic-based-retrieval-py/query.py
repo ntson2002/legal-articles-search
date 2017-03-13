@@ -5,8 +5,8 @@ import numpy as np
 import random
 
 
-def openTopicVectors():
-    with open('output/topic.pickle', 'rb') as handle:
+def openTopicVectors(path='output/topic.pickle'):
+    with open(path, 'rb') as handle:
         [model, vocab] = pickle.load(handle)
 
     print len(vocab)
@@ -19,8 +19,8 @@ def openTopicVectors():
         print('Topic {}: {}'.format(i, ' '.join(topic_words)))
 
 
-def getTopics():
-    with open('output/topic.pickle', 'rb') as handle:
+def getTopics(path='output/topic.pickle'):
+    with open(path, 'rb') as handle:
         [model, topic_vectors, vocab] = pickle.load(handle)
 
     n_top_words = 10

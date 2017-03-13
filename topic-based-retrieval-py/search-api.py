@@ -3,8 +3,11 @@ import json
 
 import query as api
 
+data_folder = "output/english"
+
 urls = ('/api/search/(.+)', 'api_query',
         '/api/search_mds/(.*)', 'api_query_mds',
+        '/api/search_mds/', 'api_query_mds_post',
         '/api/topics', 'api_topics',
         '/api/search/', 'api_query_post',
         '/api/search2/(.*)/topic/(.+)', 'api_query_topic',
@@ -14,7 +17,8 @@ urls = ('/api/search/(.+)', 'api_query',
 class api_topics:
     def GET(self):
         web.header('Content-Type', 'application/json')
-        data = api.getTopics()
+        model = data_folder + '/topic.pickle'
+        data = api.getTopics(model)
         return json.dumps(data, indent=4, sort_keys=True)
 
 class api_query:
@@ -22,7 +26,7 @@ class api_query:
         print "function: api_query"
         print "q:", q
         web.header('Content-Type', 'application/json')
-        model = "output/model_TFIDF.pkl"
+        model = data_folder + "/model_TFIDF.pkl"
         data = api.queryTFIDF(model, q, 20)
         return json.dumps(data, indent=4, sort_keys=True)
 
@@ -33,7 +37,7 @@ class api_query_post:
         post_data = web.input(_method='post')
         print "q:", post_data["q"]
         q = post_data["q"]
-        model = "output/model_TFIDF.pkl"
+        model = data_folder + "/model_TFIDF.pkl"
         data = api.queryTFIDF(model, q, 20)
         return json.dumps(data, indent=4, sort_keys=True)
             
@@ -42,7 +46,18 @@ class api_query_mds:
         print "function: api_query_mds"
         print "q:", q
         web.header('Content-Type', 'application/json')
-        model = "output/model_TFIDF_MDS.pkl"
+        model = data_folder + "/model_TFIDF_MDS.pkl"
+        data = api.queryMDS(model, q, 20)
+        return json.dumps(data, indent=4, sort_keys=True)
+
+class api_query_mds_post:
+    def GET(self, q):
+        print "function: api_query_mds_post"
+        post_data = web.input(_method='post')
+        q = post_data["q"]
+        print "q:", q
+        web.header('Content-Type', 'application/json')
+        model = data_folder + "/model_TFIDF_MDS.pkl"
         data = api.queryMDS(model, q, 20)
         return json.dumps(data, indent=4, sort_keys=True)
 
@@ -52,8 +67,8 @@ class api_query_topic:
         print "q:", q
         print "t:", t
         web.header('Content-Type', 'application/json')
-        model = "output/model_TFIDF.pkl"
-        topicFile = "output/topic.pickle"
+        model = data_folder + "/model_TFIDF_MDS.pkl"
+        topicFile = data_folder + "/topic.pickle"
         data = api.queryTFIDF_topicBased(model, topicFile, q, t, 30)
         return json.dumps(data, indent=4, sort_keys=True, encoding="utf-8")
 
@@ -66,8 +81,8 @@ class api_query_topic_post:
         print "q:", q
         print "t:", t
         web.header('Content-Type', 'application/json')
-        model = "output/model_TFIDF.pkl"
-        topicFile = "output/topic.pickle"
+        model = data_folder + "/model_TFIDF.pkl"
+        topicFile = data_folder + "/topic.pickle"
         data = api.queryTFIDF_topicBased(model, topicFile, q, t, 30)
         return json.dumps(data, indent=4, sort_keys=True, encoding="utf-8")        
 
