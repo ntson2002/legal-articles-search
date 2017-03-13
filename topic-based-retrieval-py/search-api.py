@@ -3,10 +3,12 @@ import json
 
 import query as api
 
-urls = ('/api/search/(.*)', 'api_query',
+urls = ('/api/search/(.+)', 'api_query',
         '/api/search_mds/(.*)', 'api_query_mds',
         '/api/topics', 'api_topics',
-        '/api/search2/(.*)/topic/(.+)', 'api_query_topic')
+        '/api/search/', 'api_query_post',
+        '/api/search2/(.*)/topic/(.+)', 'api_query_topic',
+        '/api/search2/', 'api_query_topic_post')
 
 
 class api_topics:
@@ -24,6 +26,17 @@ class api_query:
         data = api.queryTFIDF(model, q, 20)
         return json.dumps(data, indent=4, sort_keys=True)
 
+class api_query_post:
+    def POST(self):
+        print "function: api_query_post"
+        web.header('Content-Type', 'application/json')
+        post_data = web.input(_method='post')
+        print "q:", post_data["q"]
+        q = post_data["q"]
+        model = "output/model_TFIDF.pkl"
+        data = api.queryTFIDF(model, q, 20)
+        return json.dumps(data, indent=4, sort_keys=True)
+            
 class api_query_mds:
     def GET(self, q):
         print "function: api_query_mds"
@@ -42,7 +55,24 @@ class api_query_topic:
         model = "output/model_TFIDF.pkl"
         topicFile = "output/topic.pickle"
         data = api.queryTFIDF_topicBased(model, topicFile, q, t, 30)
-        return json.dumps(data, indent=4, sort_keys=True)
+        return json.dumps(data, indent=4, sort_keys=True, encoding="utf-8")
+
+class api_query_topic_post:
+    def POST(self):
+        print "function: api_query_topic_post"
+        post_data = web.input(_method='post')
+        q = post_data["q"]
+        t = post_data["t"]
+        print "q:", q
+        print "t:", t
+        web.header('Content-Type', 'application/json')
+        model = "output/model_TFIDF.pkl"
+        topicFile = "output/topic.pickle"
+        data = api.queryTFIDF_topicBased(model, topicFile, q, t, 30)
+        return json.dumps(data, indent=4, sort_keys=True, encoding="utf-8")        
+
+
+
 
 class SearchAPIApplication(web.application):
     def run(self, port=8080, *middleware):

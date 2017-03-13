@@ -21,7 +21,6 @@ public class RMIServer {
 		int rmiport = Integer.parseInt(cfObject.getAtribute("rmi-port"));
 		Registry registry =  LocateRegistry.createRegistry(rmiport);
 		registry.bind(cfObject.getAtribute("rmi-id"), impl);
-		// DocSimplifiedLSTM123Main.configuration();
 		System.out.println("start is started");
 	}
 }
