@@ -34,7 +34,7 @@ def getTopics(path='output/topic.pickle'):
     return data
 
 
-def queryMDS(model, query, top_k):
+def queryMDS(model, query, top_k, replace_underscore):
     """
 
     :param model: model file
@@ -42,7 +42,9 @@ def queryMDS(model, query, top_k):
     :param top_k: top k (int) relevant documents
     :return:
     """
-    query = query.replace("_", " ")
+    if replace_underscore:
+        query = query.replace("_", " ")
+
 
     with open(model, 'rb') as input:
         [files, vectorizer, matrix, D, T, M, invD, datas] = pickle.load(input)
@@ -71,7 +73,7 @@ def queryMDS(model, query, top_k):
     return data
 
 
-def queryTFIDF_topicBased(model, topicFile, query, topic, top_k):
+def queryTFIDF_topicBased(model, topicFile, query, topic, top_k, replace_underscore=True):
     """
 
     :param model: path of TF-IDF vectors
@@ -81,7 +83,9 @@ def queryTFIDF_topicBased(model, topicFile, query, topic, top_k):
     :param top_k: return top k most relevant documents
     :return: data + coordinate to visuallize
     """
-    query = query.replace("_", " ")
+    if replace_underscore:
+        query = query.replace("_", " ")
+
     with open(model, 'rb') as input:
         [files, vectorizer, matrix, datas] = pickle.load(input)
 
@@ -139,8 +143,11 @@ def queryTFIDF_topicBased(model, topicFile, query, topic, top_k):
     return data
 
 
-def queryTFIDF(model, query, top_k):
-    query = query.replace("_", " ")
+def queryTFIDF(model, query, top_k, replace_underscore=True):
+
+    if replace_underscore:
+        query = query.replace("_", " ")
+
     with open(model, 'rb') as input:
         [files, vectorizer, matrix, datas] = pickle.load(input)
         # [files, vectorizer, matrix, D, T, M, invD, datas] = pickle.load(input)
