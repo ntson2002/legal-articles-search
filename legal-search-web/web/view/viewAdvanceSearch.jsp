@@ -209,7 +209,10 @@
             result = queryTFIDF_topicBased(IP, q, topic);
         }
         else
+        {
+//            q = "数年前";
             result = queryTFIDF(IP, q);
+        }
     }
     
     if (result != null)

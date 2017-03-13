@@ -67,7 +67,7 @@ class api_query_topic:
         print "q:", q
         print "t:", t
         web.header('Content-Type', 'application/json')
-        model = data_folder + "/model_TFIDF_MDS.pkl"
+        model = data_folder + "/model_TFIDF.pkl"
         topicFile = data_folder + "/topic.pickle"
         data = api.queryTFIDF_topicBased(model, topicFile, q, t, 30, replace_underscore=True)
         return json.dumps(data, indent=4, sort_keys=True, encoding="utf-8")
