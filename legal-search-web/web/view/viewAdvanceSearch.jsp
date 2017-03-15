@@ -19,13 +19,16 @@
 <%@page import="com.interf.test.Constant"%>
 
 
+<%--<%@page contentType="text/html" pageEncoding="UTF-8"%>--%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <%
 //    String IP = "http://150.65.207.57:8081";
 //    String IP = "http://150.65.242.122:8081";
         String IP = "http://127.0.0.1:8081";
 %>
 <%!
+    
     public String topicTabString(JSONObject topics) throws RemoteException, Exception {
         Iterator<?> keys = topics.keys();        
         StringWriter sOut = new StringWriter();
@@ -203,7 +206,8 @@
     
     if (request.getParameter("q") != null) {
         _vQuery = request.getParameter("q");
-        q = _vQuery.replaceAll("[^a-zA-Z0-9 ]", " ").replaceAll("  ", " ").replaceAll(" ", "_");
+//        q = _vQuery.replaceAll("[^a-zA-Z0-9 ]", " ").replaceAll("  ", " ").replaceAll(" ", "_");
+        q = _vQuery.replaceAll("\\s+", "_");
         if (request.getParameter("topic") != null && !"none".equals(request.getParameter("topic"))) {
             
             result = queryTFIDF_topicBased(IP, q, topic);
@@ -250,7 +254,9 @@
             out.println("</span>");
         }
         out.println("<span class='query'>");
-        out.println(" " + _vQuery);
+//        String name = new String(_vQuery.getBytes(), "EUC-JP");
+//        out.println("XYZ:" + name );
+        out.println(_vQuery);
         out.println("</span>");
     }
 %>

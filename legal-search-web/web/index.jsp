@@ -9,6 +9,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
+    request.setCharacterEncoding("utf-8");
     String f = request.getParameter("f");
     if (f == null)
         f = "Home";
