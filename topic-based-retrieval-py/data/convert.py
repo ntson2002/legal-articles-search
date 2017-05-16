@@ -20,7 +20,7 @@ def convert_txt_to_json(path, outpath):
                 asentece["length"] = len(content.split(" "))
                 sentences = []
                 sentences.append(asentece)
-                doc["article_id"] = file
+                doc["article_id"] = os.path.basename(file)
                 doc["sentences"] = sentences
                 doc["description"] = ""
                 data.append(doc)

@@ -39,8 +39,8 @@ public JSONArray queryOnOriginalSpace(String q) throws RemoteException, Exceptio
         //String IP = "127.0.0.1";//args[0];
         //String IP = "150.65.43.47";//args[0];
         //String IP = "150.65.204.15";
-//        String IP = "150.65.242.122";
-        String IP = "127.0.0.1";
+        String IP = "150.65.242.122";
+//        String IP = "127.0.0.1";
         Registry registry = LocateRegistry.getRegistry(IP, 52366);
         TestRemote remote = (TestRemote) registry.lookup("LEGAL-API");
         
@@ -75,7 +75,8 @@ public JSONArray queryOnMDSSpace_old(JspWriter out, String q) throws IOException
 
 public JSONArray queryOnMDSSpace(JspWriter out, String q) throws IOException, JSONException 
 {   
-    String address = "http://127.0.0.1:8081";
+//    String address = "http://127.0.0.1:8081";
+    String address = "http://150.65.242.122:8081";
     String url = address + "/api/search_mds/" + q.replace(" ", "_");
     JSONObject o = Rest.getJSONObjectFromURL(url);    
     return o.getJSONArray("result");
