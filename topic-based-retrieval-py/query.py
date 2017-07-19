@@ -33,6 +33,19 @@ def getTopics(path='output/topic.pickle'):
         data[i] = b
     return data
 
+def getTopics2(topic):
+    [model, topic_vectors, vocab] = topic
+    n_top_words = 10
+    data = {}
+    for i in range(len(topic_vectors)):
+        topic_dist = topic_vectors[i]
+        topic_words = np.array(vocab)[np.argsort(topic_dist)][:-(n_top_words + 1):-1]
+        a = zip(topic_words, topic_dist[np.argsort(topic_dist)][:-(n_top_words + 1):-1])
+        b = [[t[0], t[1]] for t in a]
+        data[i] = b
+
+    return data
+
 
 def queryMDS(model, query, top_k, replace_underscore):
     """
@@ -48,6 +61,44 @@ def queryMDS(model, query, top_k, replace_underscore):
 
     with open(model, 'rb') as input:
         [files, vectorizer, matrix, D, T, M, invD, datas] = pickle.load(input)
+    test_query = [query]
+    print matrix.shape
+    print T.shape
+    query_vec = transform_query_to_vector(vectorizer, test_query)
+    d = distance.cdist(query_vec, matrix, 'cosine')
+    m = T.dot(d.T)
+    scores2 = distance.cdist(m.T, M, 'cosine')
+    results2 = sorted(zip(files, scores2[0, :]), key=lambda tup: tup[1], reverse=False)
+
+    list = []
+    data = {}
+
+    for t in results2[:top_k]:
+        x = {}
+        x["path"] = t[0]
+        x["terms"] = ""
+        x["score"] = t[1]
+        x["text"] = datas[t[0]]
+        list.append(x)
+
+    data["result"] = list
+
+    return data
+
+
+def queryMDS2(model, query, top_k, replace_underscore):
+    """
+
+    :param model: model file
+    :param query: query
+    :param top_k: top k (int) relevant documents
+    :return:
+    """
+    if replace_underscore:
+        query = query.replace("_", " ")
+
+
+    [files, vectorizer, matrix, D, T, M, invD, datas] = model
     test_query = [query]
     print matrix.shape
     print T.shape
@@ -91,6 +142,73 @@ def queryTFIDF_topicBased(model, topicFile, query, topic, top_k, replace_undersc
 
     with open(topicFile, 'rb') as handle:
         [_, topic_vectors, vocab] = pickle.load(handle)
+
+    test_query = [query]
+    query_vec = transform_query_to_vector(vectorizer, test_query)  # query vec is a numpy matrix
+    topic_vec = np.array(topic_vectors[int(topic)])  # topic vec
+    new_query_vec = query_vec * (topic_vec * 20)
+
+    scores2 = distance.cdist(new_query_vec, matrix, 'cosine')  # ma tran khoang cach
+
+    top_inds = np.argsort(scores2[0, :])[:top_k]
+    docs = [files[i] for i in top_inds]
+    mm = np.array([matrix[i] for i in top_inds])
+    mm = np.append(mm, new_query_vec, axis=0)
+
+    results2 = sorted(zip(files, scores2[0, :]), key=lambda tup: tup[1], reverse=False)
+
+    # check score
+    # scores3 = distance.cdist(new_query_vec, mm, 'cosine')
+    # print scores3
+
+    list = []
+    data = {}
+
+    for t in results2[:top_k]:
+        x = {}
+        x["path"] = t[0]
+        x["terms"] = ""
+        x["score"] = t[1]
+        x["text"] = datas[t[0]]
+        list.append(x)
+
+    data["result"] = list
+
+    D = distance.cdist(mm, mm, 'cosine')
+    r = lambda: random.randint(0, 255)
+
+    mds_xy = convert_to_mds(D, 2)
+    map_info = [(mds_xy[i][0], mds_xy[i][1], docs[i], '#%02X%02X%02X' % (255, i * 8, 0), 20) for i in range(top_k)]
+    map_info.append((mds_xy[top_k][0], mds_xy[top_k][1], "query", "#00f", 25))
+
+    map_data = {}
+    map_data["animation"] = {"duration": 10000}
+    # map_data["datasets"] = [{"label":"ABC", "backgroundColor":'#%02X%02X%02X' % (r(),r(),r()), "data":[{"x":t[0], "y":t[1], "r":10}]} for t in mds_xy]
+    map_data["datasets"] = [{"label": t[2], "backgroundColor": t[3], "data": [{"x": t[0], "y": t[1], "r": t[4]}]} for t
+                            in map_info]
+
+    # data["mds"] = mds_xy
+    data["map_data"] = map_data
+
+    # pprint (map_data)
+    return data
+
+def queryTFIDF_topicBased2(model, topicFile, query, topic, top_k, replace_underscore=True):
+    """
+
+    :param model: path of TF-IDF vectors
+    :param topicFile: path of topic files that contains a list of topics
+    :param query: input query
+    :param topic: index of topic
+    :param top_k: return top k most relevant documents
+    :return: data + coordinate to visuallize
+    """
+    if replace_underscore:
+        query = query.replace("_", " ")
+
+
+    [files, vectorizer, matrix, datas] = model
+    [_, topic_vectors, vocab] = topicFile
 
     test_query = [query]
     query_vec = transform_query_to_vector(vectorizer, test_query)  # query vec is a numpy matrix
@@ -188,6 +306,51 @@ def queryTFIDF(model, query, top_k, replace_underscore=True):
     data["map_data"] = map_data
     return data
 
+
+def queryTFIDF2(model, query, top_k, replace_underscore=True):
+
+    if replace_underscore:
+        query = query.replace("_", " ")
+
+
+    [files, vectorizer, matrix, datas] = model
+        # [files, vectorizer, matrix, D, T, M, invD, datas] = pickle.load(input)
+
+    test_query = [query]
+    query_vec = transform_query_to_vector(vectorizer, test_query)
+    scores2 = distance.cdist(query_vec, matrix, 'cosine')
+
+    top_inds = np.argsort(scores2[0, :])[:top_k]
+    docs = [files[i] for i in top_inds]
+    mm = np.array([matrix[i] for i in top_inds])
+    mm = np.append(mm, query_vec, axis=0)
+
+    results2 = sorted(zip(files, scores2[0, :]), key=lambda tup: tup[1], reverse=False)
+
+    list = []
+    data = {}
+
+    for t in results2[:top_k]:
+        x = {}
+        x["path"] = t[0]
+        x["terms"] = ""
+        x["score"] = t[1]
+        x["text"] = datas[t[0]]
+        list.append(x)
+
+    data["result"] = list
+
+    D = distance.cdist(mm, mm, 'cosine')
+    mds_xy = convert_to_mds(D, 2)
+    map_info = [(mds_xy[i][0], mds_xy[i][1], docs[i], '#%02X%02X%02X' % (0, i * 8, 0), 20) for i in range(top_k)]
+    map_info.append((mds_xy[top_k][0], mds_xy[top_k][1], "query", "#00f", 25))
+    map_data = {
+        "animation": {"duration": 10000},
+        "datasets": [{"label": t[2], "backgroundColor": t[3], "data": [{"x": t[0], "y": t[1], "r": t[4]}]} for t in
+                     map_info]
+    }
+    data["map_data"] = map_data
+    return data
 
 if __name__ == '__main__':
     # openTopicVectors()

@@ -1748,7 +1748,7 @@ module.exports = function(Chart) {
 					return '';
 				},
 				label: function(tooltipItem, data) {
-					return '(' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ')';
+					return '(' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ') ABC';
 				}
 			}
 		}
@@ -2409,7 +2409,7 @@ module.exports = function(Chart) {
 				label: function(tooltipItem, data) {
 					var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
 					var dataPoint = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-					return datasetLabel + ': (' + dataPoint.x + ', ' + dataPoint.y + ', ' + dataPoint.r + ')';
+					return datasetLabel + ': (' + dataPoint.x + ', ' + dataPoint.y + ', ' + dataPoint.r + ')ABC'; //ntson2002
 				}
 			}
 		}

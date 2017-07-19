@@ -1,0 +1,10 @@
+Step 1:
+scp /Users/sonnguyen/Bitbucket/legal-articles-search/legal-search-web/dist/legal-search-web.war tomcat@150.65.242.97:/home/tomcat/tomcat/webapps/legal-search-jp.war
+
+Step 2:
+ssh sa@150.65.242.97
+@admin2016
+cd ~/apache/scripts
+sudo bash map-local-tomcat.sh
+@admin2016
+sudo bash reload-httpd.sh

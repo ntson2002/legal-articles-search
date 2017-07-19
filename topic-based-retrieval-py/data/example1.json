@@ -1,6 +1,6 @@
 [
     {
-        "article_id": "/Users/sonnguyen/Bitbucket/legal-articles-search/topic-based-retrieval-py/data/example1/doc1.txt", 
+        "article_id": "doc1.txt", 
         "description": "", 
         "sentences": [
             {
@@ -10,7 +10,7 @@
         ]
     }, 
     {
-        "article_id": "/Users/sonnguyen/Bitbucket/legal-articles-search/topic-based-retrieval-py/data/example1/doc2.txt", 
+        "article_id": "doc2.txt", 
         "description": "", 
         "sentences": [
             {
@@ -20,7 +20,7 @@
         ]
     }, 
     {
-        "article_id": "/Users/sonnguyen/Bitbucket/legal-articles-search/topic-based-retrieval-py/data/example1/doc3.txt", 
+        "article_id": "doc3.txt", 
         "description": "", 
         "sentences": [
             {
@@ -30,7 +30,7 @@
         ]
     }, 
     {
-        "article_id": "/Users/sonnguyen/Bitbucket/legal-articles-search/topic-based-retrieval-py/data/example1/doc4.txt", 
+        "article_id": "doc4.txt", 
         "description": "", 
         "sentences": [
             {
@@ -40,7 +40,7 @@
         ]
     }, 
     {
-        "article_id": "/Users/sonnguyen/Bitbucket/legal-articles-search/topic-based-retrieval-py/data/example1/doc5.txt", 
+        "article_id": "doc5.txt", 
         "description": "", 
         "sentences": [
             {

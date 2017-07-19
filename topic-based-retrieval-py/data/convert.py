@@ -27,14 +27,14 @@ def convert_txt_to_json(path, outpath):
 
 
     from pprint import pprint
-    pprint (data)
+    #pprint (data)
 
     with codecs.open(outpath, "w", "utf-8") as fout:
         fout.write(json.dumps(data, indent=4))
 
 
-folder = "/Users/sonnguyen/Bitbucket/legal-articles-search/topic-based-retrieval-py/data/example1"
-output = "/Users/sonnguyen/Bitbucket/legal-articles-search/topic-based-retrieval-py/data/example1.json"
+folder = "/home/s1520203/nomura-data/all_documents/hoge4"
+output = "/home/s1520203/nomura-data/all_documents/hoge4.json"
 
 convert_txt_to_json(folder, output)
 

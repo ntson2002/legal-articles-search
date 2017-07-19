@@ -23,7 +23,12 @@ def buildTFIDFModel(jsonCorpus, outPath):
     print "Number of files: ", matrix.shape
     # print "Distance matrix: ", D.shape
 
-    save_object([files, vectorizer, matrix, datas], outPath)
+    object = [files, vectorizer, matrix, datas]
+
+
+    # save_object([files, vectorizer, matrix], outPath)
+    save_object(object, outPath)
+
     print "model TF-IDF has been saved !!!"
 
 

@@ -6,19 +6,26 @@ from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords
 from sklearn.metrics.pairwise import cosine_similarity
 import json
+import os
 
-
-def getStopWords():
-    list = stopwords.words('english')
-    list.append("iv")
-    list.append("v")
-    list.append("iii")
-    list.append("rrb")
-    list.append("lrb")
-    list.append("shall")
-    list.append("may")
-    list.append("article")
-    list.append("paragraph")
+def getStopWords(language="japanese"):
+    if language == "english":
+        list = stopwords.words('english')
+        list.append("iv")
+        list.append("v")
+        list.append("iii")
+        list.append("rrb")
+        list.append("lrb")
+        list.append("shall")
+        list.append("may")
+        list.append("article")
+        list.append("paragraph")
+    else:
+        print "Using JAPANESE stopwords:"
+        with open("stopwords.japanese", 'rb') as f:
+            text = f.read().decode('utf-8')
+        words = text.splitlines()
+        list = [w.strip() for w in words]
     return list
 
 
@@ -112,4 +119,7 @@ def convert_to_mds(matrix, dimensions=50):
 
 def save_object(obj, filename):
     with open(filename, 'wb') as output:
-        pickle.dump(obj, output, pickle.HIGHEST_PROTOCOL)
+        # pickle.dump(obj, output, pickle.HIGHEST_PROTOCOL)
+        pickle.dump(obj, output)
+
+###

@@ -11,5 +11,5 @@ package util;
  * @author ntson
  */
 public enum PageList {
-    Home, Search, About, AdvanceSearch
+    Home, Search, About, AdvanceSearch, Login, Logout
 }

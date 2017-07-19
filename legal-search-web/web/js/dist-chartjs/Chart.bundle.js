@@ -7,6 +7,11 @@
  * Released under the MIT license
  * https://github.com/chartjs/Chart.js/blob/master/LICENSE.md
  */
+
+/*
+ * Search ntson2002 for changes 
+ */
+
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /* MIT license */
 var colorNames = require('color-name');
@@ -5787,7 +5792,7 @@ module.exports = function(Chart) {
 					return '';
 				},
 				label: function(tooltipItem, data) {
-					return '(' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ')';
+					return '(' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ')'; //ntson2002
 				}
 			}
 		}
@@ -6451,8 +6456,9 @@ module.exports = function(Chart) {
 					var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
 					var dataPoint = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
 					//return datasetLabel + ': (' + dataPoint.x + ', ' + dataPoint.y + ', ' + dataPoint.r + ')';
-                                        return 'Artilce ' + datasetLabel + ': (' + dataPoint.x + ', ' + dataPoint.y + ')';
-                                        return '(' + dataPoint.x + ', ' + dataPoint.y + ')';
+//                                        return datasetLabel + ': (' + dataPoint.x + ', ' + dataPoint.y + ')'; //ntson2002
+                                        return datasetLabel + ': (rank: ' + (tooltipItem.datasetIndex+1) + ')'; //ntson2002
+//                                        return '(' + dataPoint.x + ', ' + dataPoint.y + ')';
                                         //return dataPoint._dataSetLabel + '(' + dataPoint.x + ', ' + dataPoint.y + ')';
                                         
 				}
