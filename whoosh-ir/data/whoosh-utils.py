@@ -1,19 +1,24 @@
+# -*- coding: utf-8 -*-
 
 import os
 from glob import glob
-from whoosh.index import create_in, exists_in, open_dir
-from whoosh.analysis import StandardAnalyzer, StopFilter, RegexTokenizer, LowercaseFilter, NgramTokenizer, NgramFilter
-
+from whoosh.index import create_in, open_dir
+from whoosh.analysis import StandardAnalyzer
+from whoosh.qparser import QueryParser, OrGroup
 from whoosh.fields import *
-from nltk.corpus import stopwords
+from whoosh import scoring
 
-def get_schema(stopword_list=None):
-    # stopword_list = stopwords.words('english')
-    my_analyzer = StandardAnalyzer(stoplist=stopword_list)
-    schema = Schema(title=TEXT(stored=True), path=ID(stored=True, unique=True),
-                    content=TEXT(stored=True, vector=True, analyzer=my_analyzer))
-    return schema
-
+'''
+    def get_files(path): Lấy danh sách file trong một thư mục
+    def get_files_recursive(path):  Lấy danh sách file trong một thư mục
+    def get_text_from_file(path): Lấy nội dung file
+    def get_schema(stopword_list=None): tạo schema
+    def index(files, output_folder): Index nhiều file (tạo index mới)
+    def append(files, ix): Index thêm nhiều file vào một index cũ
+    def get_docnum(ix, path): Lấy docnumber từ path
+    def delete_doc(path, ix): Xoá document khỏi index
+    def query(ix, q): Thực hiện query
+'''
 
 def get_files(path):
     result = []
@@ -33,8 +38,15 @@ def get_text_from_file(path):
         content = content_file.read()
         return content
 
-def index(files, output_folder):
+def get_schema(stopword_list=None):
+    # stopword_list = stopwords.words('english')
+    my_analyzer = StandardAnalyzer(stoplist=stopword_list)
+    schema = Schema(title=TEXT(stored=True), path=ID(stored=True, unique=True),
+                    content=TEXT(stored=True, vector=True, analyzer=my_analyzer))
+    return schema
 
+
+def index(files, output_folder):
     schema = get_schema()
     ix = create_in(output_folder, schema)
     total = len(files)
@@ -50,6 +62,7 @@ def index(files, output_folder):
 
         writer.commit()
         i = i + 1
+    print "#doc: ", ix.doc_count_all(), ix.doc_count()
 
 def append(files, ix):
     total = len(files)
@@ -67,7 +80,6 @@ def append(files, ix):
         else:
             writer.update_document(title=unicode(f, "utf-8"), path=unicode(f, "utf-8"), content=unicode(text, "utf-8"))
             iupdate += 1
-
         writer.commit()
         i = i + 1
 
@@ -87,29 +99,37 @@ def delete_doc(path, ix):
     writer.commit()
     print "deleted: ", docnum, path
 
+def query(ix, q):
+    with ix.searcher(weighting=scoring.TF_IDF()) as searcher:
+        qp = QueryParser("content", ix.schema, group=OrGroup)
+        query = qp.parse(q)
+
+        results = searcher.search(query, limit=10, terms=True)
+        print "\n----all hits -----"
+        for r in results:
+            print type(r), r.score, r.rank, r.docnum, r, r.fields()['path']
+
+
 if __name__ == '__main__':
-    # path = "/home/s1520203/nomura-data/all_documents"
+    print "===== # step 1: Index a folder ====="
     path = "/home/s1520203/Bitbucket/legal-articles-search/whoosh-ir/data/sample"
     output_folder = "sample-index"
     files = get_files_recursive(path)
-    print files
     index(files, output_folder)
 
+    print "===== # step 2: Add some files ====="
     ix = open_dir(output_folder)
     path2 = "/home/s1520203/Bitbucket/legal-articles-search/whoosh-ir/data/sample-2"
     files2 = get_files_recursive(path2)
     append(files2, ix)
-    append(files2, ix)
+    print "#doc: ", ix.doc_count_all(), ix.doc_count()
 
-    print ix.doc_count_all()
-    print ix.doc_count()
-    append(files2, ix)
-    append(files2, ix)
-    print ix.doc_count()
 
+    print "===== # step 3: Delete a doc ====="
+    ix = open_dir(output_folder)
     delete_doc("/home/s1520203/Bitbucket/legal-articles-search/whoosh-ir/data/sample-2/7.txt", ix)
+    print "#doc: ", ix.doc_count_all(), ix.doc_count()
 
-    print ix.doc_count_all()
-    print ix.doc_count()
-
-
+    print "===== # step 4: Query ====="
+    ix = open_dir(output_folder)
+    query(ix, "fox lemur")

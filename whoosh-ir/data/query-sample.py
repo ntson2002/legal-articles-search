@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 import whoosh.index as index
 from whoosh import scoring
-
+from whoosh.searching import Hit
+from whoosh.qparser import QueryParser, OrGroup
 from whoosh.query import Phrase
+
+
 def print_term_of_doc(ix, path):
     with ix.searcher(weighting=scoring.TF_IDF()) as searcher:
         docnum = searcher.document_number(path=path)
@@ -11,10 +14,61 @@ def print_term_of_doc(ix, path):
             print "#", matcher.id(), matcher.weight(), matcher.all_items()
             matcher.next()
 
-if __name__ == '__main__':
+def demo_query():
     ix = index.open_dir("sample-index")
-    print_term_of_doc(ix, u"/2.txt")
-    print ix.field_length("content")
+    q = u"fox lemur"
+
+    with ix.searcher(weighting=scoring.TF_IDF()) as searcher:
+        qp = QueryParser("content", ix.schema, group=OrGroup)
+        query = qp.parse(q)
+
+        results = searcher.search(query, limit=10, terms=True)
+        print "results", type(results), results
+        print "\n----all hits -----"
+        for r in results:
+            print type(r), r.score, r.rank, r.docnum, r, r.fields()['path']
+            # print 'matched terms:', r.matched_terms()
+            # print 'document info:', searcher.document(path=r.fields()['path'])
+
+            # docnum = r.docnum
+            # fieldobj = searcher.schema["content"]
+            #
+            #
+            # print list(query.docs(searcher))
+            #
+            # reader = searcher.reader()
+            # from array import array
+            # doclist = array("I", reader.all_doc_ids())
+            #
+            # print [docnum for docnum in xrange(searcher.doc_count_all())]
+            # print doclist
+            # # matcher = searcher.vector(r.docnum, "content") # get all term in docnum
+            # matcher = query.matcher(searcher) # get all docs matching with each query
+            #
+            # while matcher.is_active():
+            #     print "#", matcher.id(), matcher.weight(), matcher.score(), matcher.all_items()
+            #     print searcher.vector(r.docnum, "content")
+            #     matcher.next()
+
+
+def get_docnum(ix, path):
+    with ix.searcher() as searcher:
+        docnum = searcher.document_number(path=path)
+        return docnum
+
+
+if __name__ == '__main__':
+    demo_query()
+    ix = index.open_dir("sample-index")
+    # print_term_of_doc(ix, u"/home/s1520203/Bitbucket/legal-articles-search/whoosh-ir/data/sample-2/7.txt")
+    # print ix.field_length("content")
+
+    # print get_docnum(ix, "/home/s1520203/Bitbucket/legal-articles-search/whoosh-ir/data/sample-2/7.txt")
+
+
+
+
+
 
 # from whoosh.searching import Hit
 # from whoosh.qparser import QueryParser, OrGroup
