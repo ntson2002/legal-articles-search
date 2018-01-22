@@ -23,7 +23,7 @@ class Searcher:
         query_string = post_input["query_string"].strip()
         type = post_input["type"].strip()
         map = post_input["map"].strip()
-        matched_docs = do_query(ix, query_string, type)
+        matched_docs = do_query(ix, query_string, type, topk=20)
 
 
 
@@ -177,7 +177,8 @@ def sys_args_initialization():
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--port', help='port', type=int, default=8765)
-    parser.add_argument('--index_folder', help='embeddings',default="legal_doc_index_with_data_nostop")
+    parser.add_argument('--index_folder', help='index_folder',default="legal_doc_index_with_data_nostop")
+    parser.add_argument('--topic_path', help='topic_path',default="/home/s1520203/nomura-data/index/hoge4/topic.pickle")
 
     args = parser.parse_args()
     return args
@@ -193,13 +194,15 @@ if __name__ == "__main__":
 
 
     # load topic vector from pickle file
-    topic_path = "/home/s1520203/nomura-data/index/hoge4/topic.pickle"
+    # topic_path = "/home/s1520203/nomura-data/index/hoge4/topic.pickle"
+    topic_path = args.topic_path
     print "load topic vector ... from ",
     with open(topic_path, 'rb') as input:
         topic_pickle = pickle.load(input)
     print "loaded !"
 
     # args = parse_arguments()
+    app = TaggerAPIApplication(urls, globals())
     app = TaggerAPIApplication(urls, globals())
     web.ix = ix
     web.topic_pickle = topic_pickle

@@ -1,0 +1,6 @@
+web.py
+whoosh
+nltk
+sklearn
+scipy
+lda

@@ -16,7 +16,7 @@ def get_doc(ix, path):
         # print doc
         return doc
 
-def do_query(ix, q, type):
+def do_query(ix, q, type, topk=50):
     if type == "bm25":
         weighting_model = scoring.BM25F()
     else:
@@ -26,7 +26,7 @@ def do_query(ix, q, type):
     with ix.searcher(weighting=weighting_model) as searcher:
         qp = QueryParser("content", ix.schema, group=OrGroup)
         query = qp.parse(q)
-        results = searcher.search(query, limit=50)
+        results = searcher.search(query, limit=topk)
         print "found: ", results.scored_length()
         for r in results:
             # print r.fields()["content"][:30], r.fields()["path"], r.score, r.docnum
