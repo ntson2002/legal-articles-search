@@ -29,7 +29,7 @@ def do_query(ix, q, type):
         results = searcher.search(query, limit=50)
         print "found: ", results.scored_length()
         for r in results:
-            print r.fields()["content"][:30], r.fields()["path"], r.score, r.docnum
+            # print r.fields()["content"][:30], r.fields()["path"], r.score, r.docnum
             matched_docs.append({"path": r.fields()["path"],
                                  "score": r.score,
                                  "terms": "",

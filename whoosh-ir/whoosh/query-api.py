@@ -23,9 +23,6 @@ class Searcher:
         query_string = post_input["query_string"].strip()
         type = post_input["type"].strip()
         map = post_input["map"].strip()
-        print "map:", map
-        print "query_string", query_string
-        print "type", type
         matched_docs = do_query(ix, query_string, type)
 
 

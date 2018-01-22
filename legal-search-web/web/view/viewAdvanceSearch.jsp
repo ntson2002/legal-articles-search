@@ -26,7 +26,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%!
-        String IP = "http://altix-uv.jaist.ac.jp:8765";
+//        String IP = "http://altix-uv.jaist.ac.jp:8765";
+        String IP =  "http://hpcc-057.jaist.ac.jp:8765";
 %>
 <%!
     

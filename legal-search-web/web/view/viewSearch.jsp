@@ -67,7 +67,8 @@
 <%!
 public JSONArray queryOnOriginalSpace(String q, String type) throws IOException, JSONException 
 {       
-    String url = "http://altix-uv.jaist.ac.jp:8765/api/search/";     
+//    String url = "http://altix-uv.jaist.ac.jp:8765/api/search/";     
+    String url = "http://hpcc-057.jaist.ac.jp:8765/api/search/";
     List<SimpleEntry> params = new ArrayList<SimpleEntry>();
 
     params.add(new SimpleEntry("query_string", q));
