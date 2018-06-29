@@ -23,18 +23,18 @@ class Searcher:
         query_string = post_input["query_string"].strip()
         type = post_input["type"].strip()
         map = post_input["map"].strip()
-        matched_docs = do_query(ix, query_string, type, topk=20)
+        matched_docs = do_query(ix, query_string, type)
 
 
 
         if map == "y":
             map_data = compute_map_data(query_string, matched_docs)
-            for i in range(len(matched_docs)):
-                matched_docs[i]["text"] = "\n".join(matched_docs[i]["text"].split("\n")[:5])
+            # for i in range(len(matched_docs)):
+            #     matched_docs[i]["text"] = "\n".join(matched_docs[i]["text"].split("\n")[:5])
             return json.dumps({"result": matched_docs, "map_data": map_data}, indent=4, sort_keys=True)
         else:
-            for i in range(len(matched_docs)):
-                matched_docs[i]["text"] = "\n".join(matched_docs[i]["text"].split("\n")[:5])
+            # for i in range(len(matched_docs)):
+            #     matched_docs[i]["text"] = "\n".join(matched_docs[i]["text"].split("\n")[:5])
             return json.dumps({"result": matched_docs}, indent=4, sort_keys=True)
 
 
@@ -135,15 +135,15 @@ class TopicBased_Searcher:
             if map == "y":
                 map_data = compute_map_data(query_string, matched_docs)
 
-                for i in range(len(matched_docs)):
-                    matched_docs[i]["text"] = "\n".join(matched_docs[i]["text"].split("\n")[:5]) # keep 5 first lines
+                # for i in range(len(matched_docs)):
+                #     matched_docs[i]["text"] = "\n".join(matched_docs[i]["text"].split("\n")[:5]) # keep 5 first lines
 
                 return json.dumps({"result": matched_docs, "map_data": map_data}, indent=4, sort_keys=True)
 
 
             else:
-                for i in range(len(matched_docs)):
-                    matched_docs[i]["text"] = "\n".join(matched_docs[i]["text"].split("\n")[:5]) # keep 5 first lines
+                # for i in range(len(matched_docs)):
+                #     matched_docs[i]["text"] = "\n".join(matched_docs[i]["text"].split("\n")[:5]) # keep 5 first lines
 
                 return json.dumps({"result": matched_docs}, indent=4, sort_keys=True)
 
@@ -202,7 +202,6 @@ if __name__ == "__main__":
     print "loaded !"
 
     # args = parse_arguments()
-    app = TaggerAPIApplication(urls, globals())
     app = TaggerAPIApplication(urls, globals())
     web.ix = ix
     web.topic_pickle = topic_pickle

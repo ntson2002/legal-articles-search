@@ -68,7 +68,8 @@
 public JSONArray queryOnOriginalSpace(String q, String type) throws IOException, JSONException 
 {       
 //    String url = "http://altix-uv.jaist.ac.jp:8765/api/search/";     
-    String url = "http://hpcc-057.jaist.ac.jp:8765/api/search/";
+//    String url = "http://hpcc-057.jaist.ac.jp:8765/api/search/";
+    String url = "http://altix-uv.jaist.ac.jp:8765/api/search/";
     List<SimpleEntry> params = new ArrayList<SimpleEntry>();
 
     params.add(new SimpleEntry("query_string", q));
@@ -82,6 +83,9 @@ public JSONArray queryOnOriginalSpace(String q, String type) throws IOException,
 %>
 <hr/>
 <%       
+//    String sample_query = "滅失 当時 の 本件 商品 の 価額 が 六 〇 万 円 で ある こと は すで に 述べ た とおり （ 原判決 七 枚 目 裏 四 行 目 から 同 八 枚 目 表 三行 目 まで ） で ある が 、 もし 被控訴人 が   れ 以下 で ある と 主張 する もの で ある なら ば 、 被控訴人 の 方 で これ を 立証 す べき 責任 が ある 。";
+    
+    String sample_query = "If there is a mistake in any element of the juristic act which is induced by any fraud and manifestation of intention is induced by the mistake , the person who made the manifestation of intention may assert such nullity of the manifestation of intention by mistake";
     String type = request.getParameter("type");
     if (type == null) 
         type = "tfidf";
@@ -102,7 +106,7 @@ public JSONArray queryOnOriginalSpace(String q, String type) throws IOException,
     Query: <input type="text" class="search-box w600" name="q" value="<%=_vQuery%>" />
      <input class='search-button' type="submit" value="Search"/> 
      <br/>
-     Sample query (must be tokenized): <span style="font-style: italic; font-size: smaller">滅失 当時 の 本件 商品 の 価額 が 六 〇 万 円 で ある こと は すで に 述べ た とおり （ 原判決 七 枚 目 裏 四 行 目 から 同 八 枚 目 表 三行 目 まで ） で ある が 、 もし 被控訴人 が   れ 以下 で ある と 主張 する もの で ある なら ば 、 被控訴人 の 方 で これ を 立証 す べき 責任 が ある 。</span>
+     Sample query (must be tokenized): <span style="font-style: italic; font-size: smaller"><%=sample_query%></span>
      <p>
      Weighting model:
      <div style="display: block; width: 400px; margin-left: 40px"><input name='type'  type="radio" value="tfidf" <% if(type.equals("tfidf")) out.print("checked='checked'"); %>/> TF-IDF weighting model </div>

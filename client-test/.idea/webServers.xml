@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="sftp://s1520203@uv.jaist.ac.jp:22/home/s1520203/anaconda2/bin/python" name="sftp://s1520203@uv.jaist.ac.jp:22/home/s1520203/anaconda2/bin/python">
+        <fileTransfer host="uv.jaist.ac.jp" port="22" accessType="SFTP">
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
