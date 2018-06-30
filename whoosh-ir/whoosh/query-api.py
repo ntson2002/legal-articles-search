@@ -30,7 +30,7 @@ class Searcher:
 
 
         if map == "y":
-            map_data = compute_map_data(query_string, matched_docs)
+            map_data = compute_map_data(query_string, matched_docs, language)
             # for i in range(len(matched_docs)):
             #     matched_docs[i]["text"] = "\n".join(matched_docs[i]["text"].split("\n")[:5])
             return json.dumps({"result": matched_docs, "map_data": map_data}, indent=4, sort_keys=True)
