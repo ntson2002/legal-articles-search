@@ -1,3 +1,6 @@
 /legal-search-web/nbproject/private/
 /legal-search-web/build/
 /legal-search-web/dist/
+/whoosh-ir/scripts/japanese/
+*.DS_Store
+*.pyc

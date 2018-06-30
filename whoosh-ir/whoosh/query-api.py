@@ -14,6 +14,8 @@ urls = ('/api/search/', 'Searcher',
         '/api/corpus/', 'Corpus',
         '/api/test/(.*)', 'Test')
 
+language="english"
+
 class Searcher:
     def POST(self):
         ix = web.ix
@@ -56,8 +58,8 @@ class Corpus:
 
 class TopicBased_Searcher:
     def POST(self):
-        def convert_docs_into_vector(train_set):
-            stopWords = getStopWords("japanese")
+        def convert_docs_into_vector(train_set, language):
+            stopWords = getStopWords(language)
             vectorizer = TfidfVectorizer(stop_words=stopWords, use_idf=True, sublinear_tf=False, norm=None,
                                          smooth_idf=True)
 
@@ -107,7 +109,7 @@ class TopicBased_Searcher:
             docs = [matched_docs[i]["text"] for i in range(len(matched_docs))]
 
             # convert this docs into vectors
-            doc_vectors, doc_terms = convert_docs_into_vector(docs) # list of vectors and terms of return docs
+            doc_vectors, doc_terms = convert_docs_into_vector(docs, language) # list of vectors and terms of return docs
 
             # conv
             topic_vec1 = np.array(topic_vectors[int(topic_index)])  # topic vec from topic vectors
@@ -133,7 +135,7 @@ class TopicBased_Searcher:
 
 
             if map == "y":
-                map_data = compute_map_data(query_string, matched_docs)
+                map_data = compute_map_data(query_string, matched_docs, language)
 
                 # for i in range(len(matched_docs)):
                 #     matched_docs[i]["text"] = "\n".join(matched_docs[i]["text"].split("\n")[:5]) # keep 5 first lines
@@ -196,7 +198,7 @@ if __name__ == "__main__":
     # load topic vector from pickle file
     # topic_path = "/home/s1520203/nomura-data/index/hoge4/topic.pickle"
     topic_path = args.topic_path
-    print "load topic vector ... from ",
+    print "load topic vector ... from ", topic_path, 
     with open(topic_path, 'rb') as input:
         topic_pickle = pickle.load(input)
     print "loaded !"

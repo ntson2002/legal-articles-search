@@ -24,9 +24,9 @@ def get_text_from_file(path):
         return content
 
 
-def index(root_folder, files, output):
+def index(root_folder, files, output, language):
     # schema = Schema(title=TEXT(stored=True), path=ID(stored=True), content=TEXT(stored=True))
-    my_analyzer = StandardAnalyzer(stoplist=getStopWords("japanese"))
+    my_analyzer = StandardAnalyzer(stoplist=getStopWords())
     schema = Schema(title=TEXT(stored=True), path=ID(stored=True), content=TEXT(stored=True, vector=True, analyzer=my_analyzer))
     ix = create_in(output, schema)
     total = len(files)
@@ -43,9 +43,28 @@ def index(root_folder, files, output):
         i = i + 1
 
 
-if __name__ == '__main__':
+
+def main_test():
     path = "/home/s1520203/nomura-data/all_documents"
     files = get_files_recursive(path)
     output = "legal_doc_index_with_data_nostop"
     index(path, files, output)
+
+def sys_args_initialization():
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--folder', help='folder contain all documents', default="")
+    parser.add_argument('--index_folder', help='output index folder',default="")
+    parser.add_argument('--language', help='english, japanese',default="")
+
+    args = parser.parse_args()
+    return args
+
+if __name__ == "__main__":
+    
+    args = sys_args_initialization()    
+    files = get_files_recursive(args.folder)
+    index(args.folder, files, args.index_folder,args.language)
+
 

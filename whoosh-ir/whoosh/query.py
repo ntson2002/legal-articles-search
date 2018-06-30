@@ -46,15 +46,15 @@ def do_query_topic_based(ix, q, type, topic_pickle):
 
 
 
-def compute_map_data(q, matched_docs):
+def compute_map_data(q, matched_docs, language):
     def convert_to_mds(matrix, dimensions=50):
 
         mds = manifold.MDS(n_components=dimensions, dissimilarity='precomputed', random_state=np.random.seed(12345), max_iter=5000, eps=1e-5)
         mdsMatrix = mds.fit_transform(matrix)
         return mdsMatrix
 
-    def convert_into_vector(train_set):
-        stopWords = getStopWords("japanese")
+    def convert_into_vector(train_set, language):
+        stopWords = getStopWords(language)
         vectorizer = TfidfVectorizer(stop_words=stopWords, use_idf=True, sublinear_tf=False, norm='l2', smooth_idf=True)
 
         # vectorizer = CountVectorizer(stop_words = stopWords, min_df=1)
@@ -73,7 +73,7 @@ def compute_map_data(q, matched_docs):
         train_set.append(doc["text"])
     train_set.append(q)
 
-    vectors = convert_into_vector(train_set).toarray()
+    vectors = convert_into_vector(train_set, language).toarray()
 
 
     # np.set_printoptions(precision=3)
